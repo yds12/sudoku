@@ -1,5 +1,5 @@
 require './global'
-require './sudoku_row.rb'
+require './sudoku_row'
 
 class Board
 
@@ -23,16 +23,43 @@ class Board
     m
   end
 
+  def all_values
+    m = []
+    @matrix.each { |l| m += l }
+    m
+  end
+  
+  def get index
+    all_values[index]
+  end
+
+  def set index, value
+    line = index / Size
+    col = index % Size
+
+    @matrix[line][col] = value
+  end
+
+  def get_peers index
+    line = index / Size
+    col = index % Size
+    square = line / Sqrt * Sqrt + col / Sqrt
+
+    p = []
+    lines[line].each { |e| p << e }
+    columns[col].each { |e| p << e }
+    squares[square].each { |e| p << e }
+
+    p = p.uniq.select { |i| (1..Size).include? i }
+    p.sort
+  end
+
   def shuffle!
     @matrix.shuffle!
     self
   end
 
   def swap_lines a, b
-    #l = SudokuRow.new(lines[a])
-    #lines[a] = SudokuRow.new(lines[b])
-    #lines[b] = l
-    
     lines[a], lines[b] = lines[b], lines[a]
   end
 
@@ -41,12 +68,20 @@ class Board
     swap_lines 1, 3
     swap_lines 2, 6
     swap_lines 5, 7
+    self
   end
 
   def valid?
     lines.each { |i| return false unless i.valid? }
     columns.each { |i| return false unless i.valid? }
     squares.each { |i| return false unless i.valid? }
+    return true
+  end
+
+  def possible?
+    lines.each { |i| return false if i.repeated? }
+    columns.each { |i| return false if i.repeated? }
+    squares.each { |i| return false if i.repeated? }
     return true
   end
 
