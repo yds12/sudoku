@@ -2,7 +2,7 @@ require './pattern'
 
 describe Pattern do
   before do
-    a = Array.new(Size*Size) { false }
+    a = Array.new(Size*Size) { true }
     @p = Pattern.new a
   end
 
@@ -14,15 +14,15 @@ describe Pattern do
     b = Generator.new.generate
     b2 = b.deep_copy.all_values
 
-    @p[1] = true
-    @p[49] = true
+    @p[1] = false
+    @p[49] = false
     @p.set b
 
     b.all_values.each_with_index do |v, i|
       if @p[i]
-        (1..Size).should_not include(v)
-      else
         v.should eq(b2[i])
+      else
+        (1..Size).should_not include(v)
       end
     end
   end    
