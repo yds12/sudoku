@@ -4,7 +4,7 @@ class Controller
       Gosu::Kb1, Gosu::Kb2, Gosu::Kb3, Gosu::Kb4, Gosu::Kb5,
       Gosu::Kb6, Gosu::Kb7, Gosu::Kb8, Gosu::Kb9, 
       Gosu::KbUp, Gosu::KbRight, Gosu::KbDown, Gosu::KbLeft,
-      Gosu::KbSpace, Gosu::KbReturn, Gosu::KbBackspace, Gosu::KbEscape,
+      Gosu::KbSpace, Gosu::KbReturn, Gosu::KbBackspace, Gosu::KbEscape, Gosu::KbDelete,
       Gosu::MsLeft, Gosu::MsRight
     ]
     @@down = []
