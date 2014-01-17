@@ -24,9 +24,7 @@ class Board
   end
 
   def all_values
-    m = []
-    @matrix.each { |l| m += l }
-    m
+    @matrix.flatten
   end
   
   def get index
@@ -109,6 +107,7 @@ class Board
 
     lines.each_with_index do |l, i|
       l.each_slice(Sqrt) do |s|
+        s = s.replace 0, '.'
         print s.join(" ") + "   "
       end
       puts
