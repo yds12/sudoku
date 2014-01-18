@@ -3,6 +3,7 @@ require './match'
 class MatchUI
   BoardFontSize = 30
   PlayerFontSize = 24
+  PanelFontSize = 24
   NumPadX = 8
   NumPadY = ((G::BoardTile - BoardFontSize) / 2).to_i
   PlayerNumPadX = 10
@@ -19,6 +20,7 @@ class MatchUI
 
     @board_font = Gosu::Font.new G.window, 'data/font/DroidSansBold.ttf', BoardFontSize
     @player_font = Gosu::Font.new G.window, 'data/font/DroidSansMono.ttf', PlayerFontSize
+    @panel_font = Gosu::Font.new G.window, 'data/font/DroidSansMono.ttf', PanelFontSize
   end
 
   def update
@@ -65,6 +67,7 @@ class MatchUI
   def draw
     draw_background
     draw_board
+    draw_panel
     draw_cursor
   end
 
@@ -103,16 +106,18 @@ private
     draw_numbers
   end
 
-  def draw_cell_backgrounds
-    bg_color = Gosu::Color.new(0xFFFFFFFF)
-
-    Size.times do |i|
-      Size.times do |j|
-        next unless @match.fixed_cell? i, j 
-        paint_cell i, j, bg_color
-      end
+  def draw_panel
+    if @match.win
+      text = "#{@match.ellapsed.to_i} seconds"
+      x = 10
+      y = 10
+      color = Gosu::Color.new(0xFF222222)
+      
+      @panel_font.draw text, x, y, 0, 1, 1, color
     end
+  end
 
+  def draw_cell_backgrounds
     if mouse_on_board?
       x = mouse_board_x
       y = mouse_board_y
@@ -127,6 +132,16 @@ private
       color = Gosu::Color.new(0xFFFF3333)
 
       paint_cell x, y, color
+    end
+
+    bg_color = Gosu::Color.new(0xFFFFFFFF)
+    win_color = Gosu::Color.new(0xFF99FF99)
+
+    Size.times do |i|
+      Size.times do |j|
+        paint_cell j, i, bg_color if @match.fixed_cell? i, j 
+        paint_cell j, i, win_color if @match.win
+      end
     end
   end
 

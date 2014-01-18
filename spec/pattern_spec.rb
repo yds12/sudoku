@@ -3,7 +3,7 @@ require './pattern'
 describe Pattern do
   before do
     a = Array.new(Size*Size) { true }
-    @p = Pattern.new a
+    @p = Pattern.new :easy, a
   end
 
   subject { @p }

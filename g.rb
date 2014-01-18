@@ -7,10 +7,10 @@ class G
     @@window = value
   end
 
-  ScreenWidth = 320
-  ScreenHeight = 320
+  ScreenWidth = 512
+  ScreenHeight = 512
 
-  BoardX = 10
-  BoardY = 10
+  BoardX = 96
+  BoardY = 96
   BoardTile = 32
 end

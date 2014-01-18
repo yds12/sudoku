@@ -2,21 +2,26 @@ require './generator'
 require './pattern'
 
 class Match
-  attr_reader :board
+  attr_reader :board, :win, :ellapsed
 
   def initialize
     @board = Generator.new.generate
     @solution = @board.deep_copy
+    @win = false
+    @t0 = Time.now
+    puts @t0
     
-    @pattern = Pattern.new
-    p @pattern
+    @difficulty = :easy
+    @pattern = Pattern.new @difficulty
     @pattern.set @board
-    @board.show_pretty
-    @solution.show_pretty
   end
 
   def set_number line, col, value
     @board[line][col] = value
+    if @board.valid?
+      @win = true
+      @ellapsed = Time.now - @t0
+    end
   end
 
   def erase line, col
