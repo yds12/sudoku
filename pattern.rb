@@ -1,11 +1,8 @@
 require './global'
 
 class Pattern < Array
-  def initialize difficulty, arr = nil
-    if arr.nil?
-      arr = from_file difficulty
-    end
-
+  def initialize arr = nil
+    arr = Array.new(Size * Size) { false } if arr.nil?
     super arr 
   end
 
@@ -14,9 +11,7 @@ class Pattern < Array
     board
   end
 
-private
-
-  def random difficulty
+  def self.random difficulty
     r = Random.new
     blocks = []
 
@@ -27,15 +22,16 @@ private
   
     blk = blocks.shuffle[0]
     arr = Array.new(Size * Size, &blk)
+    Pattern.new arr
   end
 
-  def from_file difficulty
+  def self.from_file difficulty, index = nil
     r = Random.new
     filename = "data/pattern/#{difficulty.to_s}.txt"
 
     f = File.open(filename)
     n_patterns = f.readline.chomp.to_i
-    selected = r.rand n_patterns
+    selected = index.nil? ? r.rand(n_patterns) : index
 
     # read until the selected pattern
     ((Size + 1) * selected).times { f.readline }
@@ -45,6 +41,13 @@ private
     Size.times { s << f.readline.chomp }
     f.close
 
-    s.chars.map { |i| i != '.' }
+    arr = s.chars.map { |i| i != '.' }
+    Pattern.new arr
+  end
+
+  def self.from_board board
+    arr = Array.new(Size * Size) { false }
+    board.all_values.each_with_index { |v, i| arr[i] = ((1..Size).include? v) }
+    Pattern.new arr
   end
 end

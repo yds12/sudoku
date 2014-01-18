@@ -5,15 +5,15 @@ class Match
   attr_reader :board, :win, :ellapsed
 
   def initialize
-    @board = Generator.new.generate
-    @solution = @board.deep_copy
+    @difficulty = :easy
+    @board = Board.from_file @difficulty # Generator.new.generate
+    @pattern = Pattern.from_board @board
+    @pattern.set @board
+
+    # @solution = @board.deep_copy
     @win = false
     @t0 = Time.now
     puts @t0
-    
-    @difficulty = :easy
-    @pattern = Pattern.new @difficulty
-    @pattern.set @board
   end
 
   def set_number line, col, value

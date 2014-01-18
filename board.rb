@@ -5,8 +5,14 @@ class Board
 
   attr_reader :matrix, :lines, :columns, :squares
 
-  def initialize
-    @matrix = Array.new(Size) { SudokuRow.new(Size) { 0 } }
+  def initialize matrix = nil
+    if matrix.nil?
+      matrix = Array.new(Size) { SudokuRow.new(Size) { 0 } }
+    else
+      matrix.each_with_index { |l, i| matrix[i] = SudokuRow.new(l) }
+    end
+
+    @matrix = matrix
   end
 
   def lines
@@ -115,5 +121,29 @@ class Board
     end
 
     nil
+  end
+
+  def self.from_file difficulty, index = nil
+    r = Random.new
+    filename = "data/board/#{difficulty.to_s}.txt"
+
+    f = File.open(filename)
+    n_patterns = f.readline.chomp.to_i
+    selected = index.nil? ? r.rand(n_patterns) : index
+
+    # read until the selected pattern
+    ((Size + 1) * selected).times { f.readline }
+
+    s = ''
+    f.readline
+    Size.times { s << f.readline.chomp }
+    f.close
+
+    board = Board.new
+
+    s.chars.each_with_index do |c, i|
+      board.set i, c.to_i if (1..Size).include? c.to_i
+    end
+    board
   end
 end

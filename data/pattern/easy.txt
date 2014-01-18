@@ -1,4 +1,4 @@
-3
+4
 
 .ooo.ooo.
 o.......o
@@ -29,3 +29,13 @@ o.o...o.o
 o.o...o.o
 oo.....oo
 .ooo.ooo.
+
+.ooo.o.o.
+oo...o..o
+...o.oo..
+ooo...o.o
+o...o....
+.oo....oo
+..oo.oo..
+oo..o...o
+..oo.ooo.

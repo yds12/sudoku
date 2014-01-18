@@ -1,5 +1,7 @@
 Size = 9
+Squares = Size * Size
 Sqrt = (Math.sqrt Size).to_i
+Numbers = (1..Size)
 
 class Object
   def deep_copy
