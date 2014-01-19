@@ -40,8 +40,9 @@ class Solver
       step
     end
 
-    puts "Sudoku board solved in #{t.round(2)} seconds"
+    puts "Sudoku board solved in #{t.round(2)} seconds (#{@solutions} solutions)"
 
+    clean_board
     @solutions
   end
 
@@ -215,12 +216,6 @@ private
     return false
   end
 
-  def with_time
-    t1 = Time.now
-    yield
-    Time.now - t1
-  end
-
   def next_empty_square
     @index += 1
     @index += 1 while fixed?(@index) and @index < Squares - 1
@@ -241,5 +236,9 @@ private
   def no_more_options
     @exhausted = true
     puts "exhausted in #{@total_steps} tries"
+  end
+
+  def clean_board
+    Squares.times { |i| @board.set(i, 0) unless fixed? i }
   end
 end

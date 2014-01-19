@@ -17,6 +17,7 @@ class Pattern < Array
 
     blocks << Proc.new { |i| i % 2 == 0 }
     blocks << Proc.new { r.rand(3) == 0 }
+    #blocks << Proc.new { r.rand(4) == 0 }
     blocks << Proc.new { r.rand(2) == 1 }
     blocks << Proc.new { |i| i % 3 == 0 && (i / 9) % 3 != 1 || i % 5 + 1 == 1 }
   
