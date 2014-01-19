@@ -6,7 +6,7 @@ class Match
 
   def initialize
     @difficulty = :easy
-    @mode = :random
+    @mode = :pattern
     @board = Generator.new.generate(@mode, @difficulty)
     @pattern = Pattern.from_board @board
     @pattern.set @board
