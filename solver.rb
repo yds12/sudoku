@@ -3,10 +3,11 @@ require './board'
 class Solver
   Limit = 40_000
 
-  attr_accessor :by_step
+  attr_accessor :by_step, :limit
 
   def initialize
     @by_step = false
+    @limit = Limit
   end
 
   def solve board
@@ -177,7 +178,7 @@ private
   end
 
   def reached_limit?
-    if @total_steps > Limit
+    if @total_steps > @limit
       @exhausted = true
       raise 'Number of tries reached the limit!'
       return true

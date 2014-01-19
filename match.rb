@@ -5,7 +5,7 @@ class Match
   attr_reader :board, :win, :ellapsed
 
   def initialize
-    @difficulty = :easy
+    @difficulty = :medium
     @mode = :pattern
     @board = Generator.new.generate(@mode, @difficulty)
     @pattern = Pattern.from_board @board
@@ -14,7 +14,7 @@ class Match
     # @solution = @board.deep_copy
     @win = false
     @t0 = Time.now
-    puts @t0
+    puts "Game started at #{@t0.strftime("%H:%M:%S %d/%m/%Y")}"
   end
 
   def set_number line, col, value
