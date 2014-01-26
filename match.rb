@@ -5,7 +5,7 @@ class Match
   attr_reader :board, :win, :ellapsed
 
   def initialize
-    @difficulty = :medium
+    @difficulty = :easy
     @mode = :pattern
     @board = Generator.new.generate(@mode, @difficulty)
     @pattern = Pattern.from_board @board
